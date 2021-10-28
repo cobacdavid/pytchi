@@ -25,6 +25,7 @@ class imgcc:
         return [e / 255 for e in liste]
 
     def __init__(self, path):
+        self._path = path
         self._liste_images = glob.glob(os.path.join(path, "*.jpg"))
         self._liste_images.sort()
 
@@ -49,6 +50,10 @@ class imgcc:
         self._ax.set_ylim(limites)
         self._ax.set_axis_off()
         self._ax.invert_yaxis()
+
+    def save(self):
+        fichier = "pytci.png"
+        plt.savefig(fichier)
 
     def show(self):
         plt.show()

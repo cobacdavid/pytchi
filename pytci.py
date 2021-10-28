@@ -17,12 +17,14 @@ class pytci:
         vid = parse_qs(urldata.query)['v'][0]
         self.video_obj = ytdown(vid)
         self.video_obj.down()
-
-    def to_img(self):
         self.video_obj.vers_photos()
 
+    def to_img(self):
+        self.cc_obj = imgcc(self.video_obj._img_fulldir)
+        self.cc_obj.traitement()
+        self.cc_obj.save()
+
     def to_plt(self):
-        self.to_img()
         self.cc_obj = imgcc(self.video_obj._img_fulldir)
         self.cc_obj.traitement()
         self.cc_obj.show()
