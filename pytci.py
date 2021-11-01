@@ -13,27 +13,27 @@ class pytci:
     def __init__(self, url):
         # https://stackoverflow.com/questions/4356538/how-can-i-extract-video-id-from-youtubes-link-in-python
         urldata = urlparse(url)
-        vid = parse_qs(urldata.query)['v'][0]
-        self.video_obj = ytdown.ytdown(vid)
+        self._vid = parse_qs(urldata.query)['v'][0]
+        self.video_obj = ytdown.ytdown(self._vid)
         self.video_obj.down()
-        self._pas = 1
-        self.video_obj.pas = self._pas
+        self._step = 1
+        self.video_obj.pas = self._step
 
     @property
-    def pas(self):
-        return self._pas
+    def step(self):
+        return self._step
 
-    @pas.setter
-    def pas(self, pas_en_s):
-        self._pas = pas_en_s
-        self.video_obj.pas = self._pas
+    @step.setter
+    def step(self, pas_en_s):
+        self._step = pas_en_s
+        self.video_obj.pas = self._step
 
     def to_img(self, taille=None):
         self.video_obj.vers_photos()
         self.cc_obj = imgcc.imgcc(self.video_obj._img_fulldir,
                                   taille)
         self.cc_obj.traitement()
-        self.cc_obj.save()
+        self.cc_obj.save(self._vid)
 
     def to_svg(self, taille=None):
         self.video_obj.vers_photos()
@@ -41,4 +41,4 @@ class pytci:
                                   taille,
                                   filefmt='svg')
         self.cc_obj.traitement()
-        self.cc_obj.save()
+        self.cc_obj.save(self._vid)

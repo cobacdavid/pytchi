@@ -50,13 +50,14 @@ class imgcc:
 
         self._ctx = cairo.Context(self._sfc)
 
-    def save(self):
+    def save(self, id_video):
         if self._filefmt == 'png':
-            fichier = "pytci.png"
+            fichier = f"{id_video}.png"
             self._sfc.write_to_png(fichier)
         else:
             self._sfc.flush()
             self._sfc.finish()
+            os.rename("pytci.svg", f"{id_video}.svg")
 
     def traitement(self):
         return self.traitement_disques()

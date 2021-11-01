@@ -15,14 +15,16 @@ import shutil
 # la version opencv-python ne semble pas compatible
 # avec matplotlib ou PIL ou ?
 import cv2
+# home
+from pathlib import Path
 
 
 class ytdown:
-    def __init__(self, vid, path='/tmp', pas_en_s=1):
+    def __init__(self, vid, pas_en_s=1):
         self._vid = vid
         self._url = f'http://youtube.com/watch?v={self.vid}'
         # chemin enregistrement
-        self._path = path
+        self._path = Path.home()
         # _pas en millisecondes
         self._pas = pas_en_s * 1_000
         self._qualite = None
