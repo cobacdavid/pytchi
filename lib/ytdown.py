@@ -18,13 +18,13 @@ import cv2
 
 
 class ytdown:
-    def __init__(self, vid, path='/tmp', pas_en_ms=1_000):
+    def __init__(self, vid, path='/tmp', pas_en_s=1):
         self._vid = vid
         self._url = f'http://youtube.com/watch?v={self.vid}'
         # chemin enregistrement
         self._path = path
-        # pas en millisecondes
-        self._pas = pas_en_ms
+        # _pas en millisecondes
+        self._pas = pas_en_s * 1_000
         self._qualite = None
         self._set_paths()
         self._init_yt()
@@ -50,11 +50,11 @@ class ytdown:
 
     @property
     def pas(self):
-        return self._pas
+        return self._pas / 1_000
 
     @pas.setter
-    def pas(self, pas_en_ms):
-        self._pas = pas_en_ms
+    def pas(self, pas_en_s):
+        self._pas = pas_en_s * 1_000
 
     def down(self):
         self._choix_qualite_min()
