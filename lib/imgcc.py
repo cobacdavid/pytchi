@@ -4,6 +4,7 @@ __twitter__ = "https://twitter.com/david_cobac"
 __github__ = "https://github.com/cobacdavid"
 __copyright__ = "Copyright 2021, CC-BY-NC-SA"
 
+
 from PIL import Image
 import glob
 import os
@@ -12,12 +13,39 @@ import random
 
 
 class imgcc:
-    def conv_en_decimaux(liste):
-        """
-        renvoie une liste de nombres compris entre 0 et 1
 
-        Keyword arguments:
-        liste -- une liste de nombres entre 0 et 255
+    """Class creating an image of concentric circles from other images.
+
+    Images have to be JPEG images with jpg extension. They have to
+    be stored in a directory and are supposed to be correctly named
+    so that the class will use them in the correct order
+    (alphanumeric order). For example, images should be named like
+    image-0546.jpg.
+
+    :param path: directory containing images
+    :type path: str
+    :param taille: Dimension of output image in pixels (PNG) or points (SVG)
+    :type taille: int or float
+    :param filefmt: output format either 'png' or 'svg' (default is 'png')
+    :type filefmt: str
+
+    **Attributes**
+        None
+
+    **Methods**
+        - apply() triggers drawings
+        - save(name) saves output with name
+
+    """
+
+    def _conv_en_decimaux(liste):
+        """Returns a list of floats in [0,1]. Useful to convert RGB int
+        tuple in a RGB float tuple.
+
+        :param liste: a list of integers in [0,255]
+        :type liste: list(int)
+        :return: a list of floats in [0,1]
+
         """
 
         return [e / 255 for e in liste]
@@ -32,14 +60,15 @@ class imgcc:
         if not taille:
             self._taille = 2 * (len(self._liste_images) + self._offset)
         else:
-            self._taille = taille
+            self._taille = round(taille)
 
         self._filefmt = filefmt
         self._init_fig()
 
-    def _init_fig(self, taille=None, bg=(0, 0, 0)):
-        self._centre = (self._taille // 2, self._taille // 2)
-        self._rayon = self._taille // 2 - self._offset
+    def _init_fig(self):
+        mi = self._taille // 2
+        self._centre = (mi, mi)
+        self._rayon = mi - self._offset
 
         if self._filefmt == 'png':
             self._sfc = cairo.ImageSurface(cairo.FORMAT_ARGB32,
@@ -50,27 +79,40 @@ class imgcc:
 
         self._ctx = cairo.Context(self._sfc)
 
-    def save(self, id_video):
+    def save(self, name):
+        """Write and save current drawings to file using name.
+
+        :param name: the name to be used to save file
+        :type name: str
+
+        .. note:: This function creates a PNG file OR rename a
+                  temporary SVG file named pytci.svg.
+
+        """
+
         if self._filefmt == 'png':
-            fichier = f"{id_video}.png"
+            fichier = f"{name}.png"
             self._sfc.write_to_png(fichier)
         else:
             self._sfc.flush()
             self._sfc.finish()
-            os.rename("pytci.svg", f"{id_video}.svg")
+            os.rename("pytci.svg", f"{name}.svg")
 
-    def traitement(self):
-        return self.traitement_disques()
+    def apply(self):
+        """Draws concentric circles according to images in path passed to
+        the constructor.
 
-    def traitement_disques(self):
+        .. note:: If an image file connot be found or cannot be
+                  opened , this function doesn't raise an error.
+
+        Actually, this algorithm extracts one random line of an
+        image and transforms it into a circle in the ouput image.
+
         """
-        crée les disques de couleur correspondant aux images
 
-        Keyword arguments:
-        liste_plans -- liste des images
-        """
+        return self._traitement_disques()
 
-        # position_x = 0
+    def _traitement_disques(self):
         rayon = self._rayon
         # épaisseur du trait :
         # L = (w-2*offset) / 2 = epaisseur * nb_images
@@ -87,7 +129,7 @@ class imgcc:
             # la médiane semble plus contrastée que la moyenne
             # avec des résultats assez similaires
             # mediane = ImageStat.Stat(im).median
-            # self._ctx.set_source_rgb(*imgcc.conv_en_decimaux(mediane))
+            # self._ctx.set_source_rgb(*imgcc._conv_en_decimaux(mediane))
             # self._ctx.arc(*self._centre, rayon, 0, 6.28)
             # self._ctx.fill()
             # rayon -= 1 / len(self._liste_images) * self._rayon
@@ -101,7 +143,7 @@ class imgcc:
             self._ctx.set_line_width(epaisseur)
             for p in range(w):
                 couleur = ligne[p]
-                self._ctx.set_source_rgb(*imgcc.conv_en_decimaux(couleur))
+                self._ctx.set_source_rgb(*imgcc._conv_en_decimaux(couleur))
                 # on dessine de petits arcs (+.1) et on ne commence
                 # pas au même endroit sinon on a un motif qui se
                 # dessine à 0 radian (i+)
@@ -110,29 +152,3 @@ class imgcc:
                 self._ctx.stroke()
 
             rayon -= 1 / len(self._liste_images) * self._rayon
-
-    ###############################################################
-    ###############################################################
-    ###############################################################
-    # def au_dessus(event):
-    #     global ligne_position
-    #     image = "/image-{:06d}.jpg".format(int(event.xdata))
-    #     fichier = repertoire_images + image
-    #     image_fond = mpimg.imread(fichier)
-    #     plt.imshow(image_fond)
-    #     #
-    #     try:
-    #         ligne_position.pop(0).remove()
-    #     except:
-    #         pass
-    #     ligne_position = plt.plot((event.xdata, event.xdata),
-    #                               (0, rayon),
-    #                               color="white",
-    #                               linewidth=3,
-    #                               alpha=.5)
-    #     fig.canvas.draw()
-
-    # ligne_position = []
-
-    # fig.canvas.mpl_connect('button_press_event', au_dessus)
-    # plt.show()

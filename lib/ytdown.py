@@ -20,13 +20,34 @@ from pathlib import Path
 
 
 class ytdown:
-    def __init__(self, vid, pas_en_s=1):
+
+    """Class to handle a YT video download and extraction of images
+    from this video.
+
+    :param vid: YT video unique id
+    :type vid: str
+    :param step: step in seconds between two image extractions
+    :type step: float
+
+
+    **Attributes**
+     - vid : str unique identifier of a YT video
+     - step : float seconds between two image extractions
+
+    **Methods**
+     - down() : downloads the chosen YT video using its id as name
+     - to_images() : extracts images from video every step seconds
+                     and stores them into a pytci- directory
+
+    """
+
+    def __init__(self, vid, step=1):
         self._vid = vid
         self._url = f'http://youtube.com/watch?v={self.vid}'
         # chemin enregistrement
         self._path = Path.home()
         # _pas en millisecondes
-        self._pas = pas_en_s * 1_000
+        self._pas = step * 1_000
         self._qualite = None
         self._set_paths()
         self._init_yt()
@@ -51,11 +72,11 @@ class ytdown:
         self._init_yt()
 
     @property
-    def pas(self):
+    def step(self):
         return self._pas / 1_000
 
-    @pas.setter
-    def pas(self, pas_en_s):
+    @step.setter
+    def step(self, pas_en_s):
         self._pas = pas_en_s * 1_000
 
     def down(self):
@@ -93,7 +114,7 @@ class ytdown:
         stream.download(output_path=self._path,
                         filename=self._vid)
 
-    def vers_photos(self):
+    def to_images(self):
         repertoire = os.path.dirname(self._vid_fullname)
         #
         os.chdir(repertoire)
@@ -120,9 +141,3 @@ class ytdown:
             else:
                 break
             compteur += 1
-
-
-if __name__ == "__main__":
-    test = ytdown('2lAe1cqCOXo')
-    test.down()
-    test.vers_photos()
