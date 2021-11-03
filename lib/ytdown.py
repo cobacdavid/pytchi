@@ -1,21 +1,16 @@
 __author__ = "david cobac"
-__email__ = "david.cobac @ gmail.com"
-__twitter__ = "https://twitter.com/david_cobac"
-__github__ = "https://github.com/cobacdavid"
 __copyright__ = "Copyright 2021, CC-BY-NC-SA"
 
-# import YT
+
 from pytube import YouTube
-# récupération du rep. courant
 import os
-# pour effacer des répertoires non vides
 import shutil
 # traitement video avec
 # opencv-python-headless
-# la version opencv-python ne semble pas compatible
-# avec matplotlib ou PIL ou ?
+# la version opencv-python
+# ne semble pas toujours compatible
+# avec d'autres bibliothèques
 import cv2
-# home
 from pathlib import Path
 
 
@@ -112,7 +107,7 @@ class ytdown:
     def _down(self):
         stream = self._yt.streams.get_by_itag(self._qualite)
         stream.download(output_path=self._path,
-                        filename=self._vid)
+                        filename=f'pytciv-{self._vid}')
 
     def to_images(self):
         repertoire = os.path.dirname(self._vid_fullname)
@@ -123,7 +118,7 @@ class ytdown:
             shutil.rmtree(self._img_dir)
         os.mkdir(self._img_dir)
         #
-        capture_video = cv2.VideoCapture(self._vid)
+        capture_video = cv2.VideoCapture(f'pytciv-{self._vid}')
         b, image = capture_video.read()
         compteur = 0
         N = self._nb_chiffres_nb_photos()

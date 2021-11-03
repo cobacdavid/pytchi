@@ -1,9 +1,61 @@
 from urllib.parse import urlparse, parse_qs
 from .lib import ytdown
 from .lib import imgcc
+import pytube
+import slugify
 
 
 class pytci:
+    def __init__(self, url):
+        """Constructor"""
+
+        urldata = urlparse(url)
+        dico_query_urldata = parse_qs(urldata.query)
+        self._list = None
+        if 'list' in dico_query_urldata:
+            self._list = pytube.contrib.playlist.Playlist(url)
+        elif 'v' in dico_query_urldata:
+            self._list = [url]
+        else:
+            pass
+
+        self._step = 1
+        self._xmth = 'diagonal'
+
+        self._obj_list = []
+        for video in self._list:
+            self._obj_list.append(pytciv(video))
+
+    @property
+    def step(self):
+        return self._step
+
+    @step.setter
+    def step(self, pas_en_s):
+        self._step = pas_en_s
+        for obj in self._obj_list:
+            obj.step = self._step
+
+    @property
+    def xmth(self):
+        return self._xmth
+
+    @xmth.setter
+    def xmth(self, exmeth):
+        self._xmth = exmeth
+        for obj in self._obj_list:
+            obj.xmth = self._xmth
+
+    def to_img(self, taille=None):
+        for obj in self._obj_list:
+            obj.to_img(taille)
+
+    def to_svg(self, taille=None):
+        for obj in self._obj_list:
+            obj.to_svg(taille)
+
+
+class pytciv:
 
     """This class uses YT URLs to produce an image. This image is made
     of concentric circles. Each circle is made joining little arcs
@@ -37,7 +89,11 @@ class pytci:
         self._vid = parse_qs(urldata.query)['v'][0]
         self.video_obj = ytdown.ytdown(self._vid)
         self.video_obj.down()
+        self._name = slugify.slugify(
+            f"pytci-{self._vid}-{self.video_obj._yt.title}"
+        )
         self._step = 1
+        self._xmth = 'diagonal'
         self.video_obj.pas = self._step
 
     @property
@@ -59,6 +115,22 @@ class pytci:
         self._step = pas_en_s
         self.video_obj.step = self._step
 
+    @property
+    def xmth(self):
+        """Extraction method of colors : 'random' (line) or 'diagonal'
+        default is 'diagonal'
+        """
+
+        return self._xmth
+
+    @xmth.setter
+    def xmth(self, exmeth):
+        """Extraction method of colors : 'random' (line) or 'diagonal'
+        default is 'diagonal'
+        """
+
+        self._xmth = exmeth
+
     def to_img(self, taille=None):
         """Outputs PNG image file using YT video unique id.
 
@@ -71,9 +143,9 @@ class pytci:
 
         self.video_obj.to_images()
         self.cc_obj = imgcc.imgcc(self.video_obj._img_fulldir,
-                                  taille)
+                                  taille, xmth=self._xmth)
         self.cc_obj.apply()
-        self.cc_obj.save(self._vid)
+        self.cc_obj.save(self._name)
 
     def to_svg(self, taille=None):
         """Outputs SVG image file using YT video unique id.
@@ -91,4 +163,4 @@ class pytci:
                                   taille,
                                   filefmt='svg')
         self.cc_obj.apply()
-        self.cc_obj.save(self._vid)
+        self.cc_obj.save(self._name)

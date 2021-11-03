@@ -1,14 +1,11 @@
 __author__ = "david cobac"
-__email__ = "david.cobac @ gmail.com"
-__twitter__ = "https://twitter.com/david_cobac"
-__github__ = "https://github.com/cobacdavid"
 __copyright__ = "Copyright 2021, CC-BY-NC-SA"
 
 
-from PIL import Image
 import glob
 import os
 import cairo
+import cv2
 import random
 
 
@@ -50,7 +47,7 @@ class imgcc:
 
         return [e / 255 for e in liste]
 
-    def __init__(self, path, taille, filefmt='png'):
+    def __init__(self, path, taille, filefmt='png', xmth='diagonal'):
         self._path = path
         self._liste_images = glob.glob(os.path.join(path, "*.jpg"))
         self._liste_images.sort()
@@ -63,6 +60,7 @@ class imgcc:
             self._taille = round(taille)
 
         self._filefmt = filefmt
+        self._exmethod = xmth
         self._init_fig()
 
     def _init_fig(self):
@@ -120,35 +118,37 @@ class imgcc:
             (2 * len(self._liste_images))
         for i, image in enumerate(self._liste_images):
             try:
-                im = Image.open(image)
-                w, h = im.size
+                im = cv2.imread(image)
+                w, h, _ = im.shape
             except FileNotFoundError:
                 continue
             except PermissionError:
                 continue
-            # la médiane semble plus contrastée que la moyenne
-            # avec des résultats assez similaires
-            # mediane = ImageStat.Stat(im).median
-            # self._ctx.set_source_rgb(*imgcc._conv_en_decimaux(mediane))
-            # self._ctx.arc(*self._centre, rayon, 0, 6.28)
-            # self._ctx.fill()
-            # rayon -= 1 / len(self._liste_images) * self._rayon
-
             # on choisit une ligne au hasard
             # c'est facile mais une diagonale serait mieux...
-            data = list(im.getdata())
-            hasard = w * random.randrange(h - 1)
-            ligne = data[hasard:hasard + w]
+            #
+            # version PIL
+            # data = list(im.getdata())
+            # hasard = w * random.randrange(h - 1)
+            # ligne = data[hasard:hasard + w]
+            #
+            # version cv2
+            if self._exmethod == "random":
+                ligne = im[:, random.randrange(h)]
+            elif self._exmethod == "diagonal":
+                ligne = []
+                for col in range(w):
+                    row = round((h - 1) / (w - 1) * col)
+                    ligne.append(im[col, row])
 
             self._ctx.set_line_width(epaisseur)
-            for p in range(w):
-                couleur = ligne[p]
+            for j, couleur in enumerate(ligne):
                 self._ctx.set_source_rgb(*imgcc._conv_en_decimaux(couleur))
                 # on dessine de petits arcs (+.1) et on ne commence
                 # pas au même endroit sinon on a un motif qui se
                 # dessine à 0 radian (i+)
                 self._ctx.arc(*self._centre, rayon,
-                              i + 6.28 * p / w, i + 6.28 * p / w + .1)
+                              i + 6.28 * j / w, i + 6.28 * j / w + .1)
                 self._ctx.stroke()
 
             rayon -= 1 / len(self._liste_images) * self._rayon
