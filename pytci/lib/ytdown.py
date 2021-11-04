@@ -37,19 +37,20 @@ class ytdown:
     """
 
     def __init__(self, vid, step=1):
-        self._vid = vid
-        self._url = f'http://youtube.com/watch?v={self.vid}'
+        self._vid = f'pytciv-{vid}'
+        self._url = f'http://youtube.com/watch?v={vid}'
         # chemin enregistrement
         self._path = Path.home()
         # _pas en millisecondes
         self._pas = step * 1_000
         self._qualite = None
+        self._to_create = True
         self._set_paths()
         self._init_yt()
 
     def _set_paths(self):
         self._vid_fullname = os.path.join(self._path, self._vid)
-        self._img_dir = 'pytci-' + os.path.splitext(self._vid)[0]
+        self._img_dir = 'extracts-' + os.path.splitext(self._vid)[0]
         self._img_fulldir = os.path.join(self._path, self._img_dir)
 
     def _init_yt(self):
@@ -61,8 +62,9 @@ class ytdown:
 
     @vid.setter
     def vid(self, YT_vid_id):
-        self._vid = YT_vid_id
-        self._url = f'http://youtube.com/watch?v={self.vid}'
+        self._vid = f'pytciv-{YT_vid_id}'
+        self._url = f'http://youtube.com/watch?v={YT_vid_id}'
+        self._to_create = True
         self._set_paths()
         self._init_yt()
 
@@ -73,8 +75,12 @@ class ytdown:
     @step.setter
     def step(self, pas_en_s):
         self._pas = pas_en_s * 1_000
+        self._to_create = True
 
     def down(self):
+        """Downloads YT video
+        """
+
         self._choix_qualite_min()
         self._down()
 
@@ -107,18 +113,35 @@ class ytdown:
     def _down(self):
         stream = self._yt.streams.get_by_itag(self._qualite)
         stream.download(output_path=self._path,
-                        filename=f'pytciv-{self._vid}')
+                        filename=self._vid)
+
+    def clean(self, all=False):
+        """Deletes YT video downloaded and images directory
+        """
+
+        if os.path.isdir(self._img_fulldir):
+            shutil.rmtree(self._img_fulldir)
+        if all:
+            os.remove(self._vid_fullname)
+
+        self._to_create = True
 
     def to_images(self):
-        repertoire = os.path.dirname(self._vid_fullname)
+        """Transforms YT downloaded video to a bunch of images according to
+        defined step.
+        """
+
+        if not self._to_create:
+            return
         #
+        repertoire = os.path.dirname(self._vid_fullname)
         os.chdir(repertoire)
         #
         if os.path.isdir(self._img_dir):
             shutil.rmtree(self._img_dir)
         os.mkdir(self._img_dir)
         #
-        capture_video = cv2.VideoCapture(f'pytciv-{self._vid}')
+        capture_video = cv2.VideoCapture(self._vid)
         b, image = capture_video.read()
         compteur = 0
         N = self._nb_chiffres_nb_photos()
@@ -136,3 +159,4 @@ class ytdown:
             else:
                 break
             compteur += 1
+        self._to_create = False

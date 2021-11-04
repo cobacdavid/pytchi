@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>PYTCI’s documentation &#8212; PYTCI 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="#">PYTCI 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">PYTCI’s documentation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="pytci-s-documentation">
+<h1>PYTCI’s documentation<a class="headerlink" href="#pytci-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="pytci.pytci">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pytci.</span></span><span class="sig-name descname"><span class="pre">pytci</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytci.pytci" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class uses YT URLs to produce images from YT videos.
+Images are made of concentric circles. Each circle is made
+joining little arcs whose color is taken from an image of the
+video. Outermost circles are the first images and innermost are
+last images.</p>
+<p>Two outputs are currently available : ‘png’ and ‘svg’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>url</strong> (<em>str</em>) – URL of YT video to convert in pytci image</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In case URL contains a (play)list variable, all
+videos from the playlist will be treated.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class is just a wrapper of the pytciv class
+which is intended to treat a single video.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">o</span> <span class="o">=</span> <span class="n">pytci</span><span class="o">.</span><span class="n">pytci</span><span class="p">(</span><span class="s1">&#39;https://www.youtube.com/watch?v=IjxkCokODEs&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">o</span><span class="o">.</span><span class="n">to_img</span><span class="p">()</span> <span class="c1"># export to png (auto dimension)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">o</span><span class="o">.</span><span class="n">to_img</span><span class="p">(</span><span class="mi">1080</span><span class="p">)</span> <span class="c1"># or with desired image&#39;s dimension</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">pytci</span><span class="o">.</span><span class="n">pytci</span><span class="p">(</span><span class="s1">&#39;https://www.youtube.com/watch?v=PVyS9JwtFoQ&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># every 2 seconds of the video (default is 1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">xmth</span> <span class="o">=</span> <span class="s1">&#39;random&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">to_svg</span><span class="p">()</span> <span class="c1"># export to svg&gt;&gt;&gt; import pytci</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">pytci</span><span class="o">.</span><span class="n">pytci</span><span class="p">(</span><span class="s1">&#39;https://www.youtube.com/watch?v=gxAaO2rsdIs&amp;list=PLZHQObOWTQDOcxqQ36Vow3TdTRjkdSvT-&#39;</span><span class="p">)</span> <span class="c1"># a playlist of 3 videos</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">to_img</span><span class="p">()</span> <span class="c1"># 3 images will be output</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pytci.pytci.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pytci.pytci.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes downloaded videos and video images directories.
+Does not delete pytci images.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pytci.pytci.step">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">step</span></span><a class="headerlink" href="#pytci.pytci.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Step in s between images extracted from YT videos
+default is 1s</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytci.pytci.to_img">
+<span class="sig-name descname"><span class="pre">to_img</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taille</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytci.pytci.to_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Outputs PNG image files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>taille</strong> (<em>int</em>) – Dimension in pixels of output image</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function creates PNG files whose name is YT
+video title prefixed with pytci and YT unique id</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytci.pytci.to_svg">
+<span class="sig-name descname"><span class="pre">to_svg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taille</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytci.pytci.to_svg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Outputs SVG image file using YT video unique id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>taille</strong> (<em>float</em>) – Dimension in points of output image
+1 point = 1/72 inch</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function creates SVG files whose name is YT
+video title prefixed with pytci and YT unique id</p>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pytci.pytci.xmth">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">xmth</span></span><a class="headerlink" href="#pytci.pytci.xmth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extraction method of colors : ‘random’ (line) or ‘diagonal’
+default is ‘diagonal’</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pytci.pytciv">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pytci.</span></span><span class="sig-name descname"><span class="pre">pytciv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytci.pytciv" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class uses YT URLs to produce an image from one YT
+video. This image is made of concentric circles. Each circle is
+made joining little arcs whose color is taken from an image of
+the video. Outermost circles are the first images and innermost
+are last images.</p>
+<p>Two outputs are currently available : ‘png’ and ‘svg’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>url</strong> (<em>str</em>) – URL of YT video to convert in pytci image</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>pytci chooses the worst quality of video offered by
+YT for best download time</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">o</span> <span class="o">=</span> <span class="n">pytci</span><span class="o">.</span><span class="n">pytciv</span><span class="p">(</span><span class="s1">&#39;https://www.youtube.com/watch?v=IjxkCokODEs&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">o</span><span class="o">.</span><span class="n">to_img</span><span class="p">()</span> <span class="c1"># export to png</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">o</span><span class="o">.</span><span class="n">to_img</span><span class="p">(</span><span class="mi">1080</span><span class="p">)</span> <span class="c1"># or with desired image&#39;s dimension</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">pytci</span><span class="o">.</span><span class="n">pytciv</span><span class="p">(</span><span class="s1">&#39;https://www.youtube.com/watch?v=PVyS9JwtFoQ&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># every 2 seconds of the video (default is 1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">to_svg</span><span class="p">()</span> <span class="c1"># export to svg&gt;&gt;&gt; import pytci</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pytci.pytciv.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytci.pytciv.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes video images directory and possibly downloaded video
+Does not delete pytci image.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pytci.pytciv.step">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">step</span></span><a class="headerlink" href="#pytci.pytciv.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Step in s between images extracted from the YT video
+default is 1s</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytci.pytciv.to_img">
+<span class="sig-name descname"><span class="pre">to_img</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taille</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytci.pytciv.to_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Outputs PNG image file using YT video unique id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>taille</strong> (<em>int</em>) – Dimension in pixels of output image</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function creates a PNG file whose name is YT
+video unique id.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytci.pytciv.to_svg">
+<span class="sig-name descname"><span class="pre">to_svg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taille</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytci.pytciv.to_svg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Outputs SVG image file using YT video unique id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>taille</strong> (<em>float</em>) – Dimension in points of output image
+1 point = 1/72 inch</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function creates a SVG file whose name is YT
+video unique id.</p>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pytci.pytciv.xmth">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">xmth</span></span><a class="headerlink" href="#pytci.pytciv.xmth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extraction method of colors : ‘random’ (line) or ‘diagonal’
+default is ‘diagonal’</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pytci.lib.ytdown.ytdown">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pytci.lib.ytdown.</span></span><span class="sig-name descname"><span class="pre">ytdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytci.lib.ytdown.ytdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to handle a YT video download and extraction of images
+from this video.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vid</strong> (<em>str</em>) – YT video unique id</p></li>
+<li><p><strong>step</strong> (<em>float</em>) – step in seconds between two image extractions</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt><strong>Attributes</strong></dt><dd><ul class="simple">
+<li><p>vid : str unique identifier of a YT video</p></li>
+<li><p>step : float seconds between two image extractions</p></li>
+</ul>
+</dd>
+<dt><strong>Methods</strong></dt><dd><ul class="simple">
+<li><p>down() : downloads the chosen YT video using its id as name</p></li>
+<li><dl class="simple">
+<dt>to_images()<span class="classifier">extracts images from video every step seconds</span></dt><dd><p>and stores them into a pytci- directory</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pytci.lib.ytdown.ytdown.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytci.lib.ytdown.ytdown.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes YT video downloaded and images directory</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytci.lib.ytdown.ytdown.down">
+<span class="sig-name descname"><span class="pre">down</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pytci.lib.ytdown.ytdown.down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads YT video</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytci.lib.ytdown.ytdown.to_images">
+<span class="sig-name descname"><span class="pre">to_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pytci.lib.ytdown.ytdown.to_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms YT downloaded video to a bunch of images according to
+defined step.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pytci.lib.imgcc.imgcc">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pytci.lib.imgcc.</span></span><span class="sig-name descname"><span class="pre">imgcc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taille</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'diagonal'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytci.lib.imgcc.imgcc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class creating an image of concentric circles from other images.</p>
+<p>Images have to be JPEG images with jpg extension. They have to
+be stored in a directory and are supposed to be correctly named
+so that the class will use them in the correct order
+(alphanumeric order). For example, images should be named like
+image-0546.jpg.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – directory containing images</p></li>
+<li><p><strong>taille</strong> (<em>int</em><em> or </em><em>float</em>) – Dimension of output image in pixels (PNG) or points (SVG)</p></li>
+<li><p><strong>filefmt</strong> (<em>str</em>) – output format either ‘png’ or ‘svg’ (default is ‘png’)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt><strong>Attributes</strong></dt><dd><p>None</p>
+</dd>
+<dt><strong>Methods</strong></dt><dd><ul class="simple">
+<li><p>apply() triggers drawings</p></li>
+<li><p>save(name) saves output with name</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pytci.lib.imgcc.imgcc.apply">
+<span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pytci.lib.imgcc.imgcc.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws concentric circles according to images in path passed to
+the constructor.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If an image file connot be found or cannot be
+opened , this function doesn’t raise an error.</p>
+</div>
+<p>Actually, this algorithm extracts one random line of an
+image and transforms it into a circle in the ouput image.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pytci.lib.imgcc.imgcc.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytci.lib.imgcc.imgcc.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write and save current drawings to file using name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – the name to be used to save file</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function creates a PNG file OR rename a
+temporary SVG file named pytci.svg.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">PYTCI’s documentation</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="#">PYTCI 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">PYTCI’s documentation</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, David COBAC.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+    </div>
+  </body>
+</html>
