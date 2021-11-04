@@ -32,12 +32,12 @@ class ytdown:
     **Methods**
      - down() : downloads the chosen YT video using its id as name
      - to_images() : extracts images from video every step seconds
-                     and stores them into a pytci- directory
+                     and stores them into a pytchi- directory
 
     """
 
     def __init__(self, vid, step=1):
-        self._vid = f'pytciv-{vid}'
+        self._vid = f'pytchiv-{vid}'
         self._url = f'http://youtube.com/watch?v={vid}'
         # chemin enregistrement
         self._path = Path.home()
@@ -62,7 +62,7 @@ class ytdown:
 
     @vid.setter
     def vid(self, YT_vid_id):
-        self._vid = f'pytciv-{YT_vid_id}'
+        self._vid = f'pytchiv-{YT_vid_id}'
         self._url = f'http://youtube.com/watch?v={YT_vid_id}'
         self._to_create = True
         self._set_paths()
@@ -153,7 +153,7 @@ class ytdown:
                 cv2.imwrite(
                     os.path.join(
                         self._img_dir,
-                        "pytcimage-{:0{N}d}.jpg".format(compteur, N=N)
+                        "pytchimage-{:0{N}d}.jpg".format(compteur, N=N)
                     ),
                     image)
             else:

@@ -3,23 +3,23 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-PYTCI's documentation
-=====================
+PYTCHI's documentation
+======================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-.. autoclass:: pytci.pytci
+.. autoclass:: pytchi.pytchi
    :members:
 
-.. autoclass:: pytci.pytciv
+.. autoclass:: pytchi.pytchiv
    :members:
 
-.. autoclass:: pytci.lib.ytdown.ytdown
+.. autoclass:: pytchi.lib.ytdown.ytdown
    :members:
 
-.. autoclass:: pytci.lib.imgcc.imgcc
+.. autoclass:: pytchi.lib.imgcc.imgcc
    :members:
 
 

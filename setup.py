@@ -4,13 +4,13 @@ with open('README.md') as f:
     long_description = f.read()
 
 setup(
-    name='pytci',
+    name='pytchi',
     version='0.1',
-    description='Python YouTube concentric Circles Image',
+    description='Python YouTube Concentric Circles Image',
     long_description_content_type='text/markdown',
     long_description=long_description,
     # url='https://twitter.com/david_cobac',
-    url="https://github.com/cobacdavid/pytci",
+    url="https://github.com/cobacdavid/pytchi",
     author='David COBAC',
     author_email='david.cobac@gmail.com',
     license='CC-BY-NC-SA',

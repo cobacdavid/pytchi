@@ -5,7 +5,7 @@ import pytube
 import slugify
 
 
-class pytci:
+class pytchi:
 
     """This class uses YT URLs to produce images from YT videos.
     Images are made of concentric circles. Each circle is made
@@ -15,24 +15,24 @@ class pytci:
 
     Two outputs are currently available : 'png' and 'svg'
 
-    :param str url: URL of YT video to convert in pytci image
+    :param str url: URL of YT video to convert in pytchi image
 
     .. note:: In case URL contains a (play)list variable, all
               videos from the playlist will be treated.
 
-    .. note:: This class is just a wrapper of the pytciv class
+    .. note:: This class is just a wrapper of the pytchiv class
               which is intended to treat a single video.
 
     :Example:
 
-    >>> o = pytci.pytci('https://www.youtube.com/watch?v=IjxkCokODEs')
+    >>> o = pytchi.pytchi('https://www.youtube.com/watch?v=IjxkCokODEs')
     >>> o.to_img() # export to png (auto dimension)
     >>> o.to_img(1080) # or with desired image's dimension
-    >>> p = pytci.pytci('https://www.youtube.com/watch?v=PVyS9JwtFoQ')
+    >>> p = pytchi.pytchi('https://www.youtube.com/watch?v=PVyS9JwtFoQ')
     >>> p.step = 2 # every 2 seconds of the video (default is 1)
     >>> p.xmth = 'random'
-    >>> p.to_svg() # export to svg>>> import pytci
-    >>> q = pytci.pytci('https://www.youtube.com/watch?v=gxAaO2rsdIs&list=PLZHQObOWTQDOcxqQ36Vow3TdTRjkdSvT-') # a playlist of 3 videos
+    >>> p.to_svg() # export to svg>>> import pytchi
+    >>> q = pytchi.pytchi('https://www.youtube.com/watch?v=gxAaO2rsdIs&list=PLZHQObOWTQDOcxqQ36Vow3TdTRjkdSvT-') # a playlist of 3 videos
     >>> q.to_img() # 3 images will be output
 
     """
@@ -55,7 +55,7 @@ class pytci:
 
         self._obj_list = []
         for video in self._list:
-            self._obj_list.append(pytciv(video))
+            self._obj_list.append(pytchiv(video))
 
     @property
     def step(self):
@@ -102,7 +102,7 @@ class pytci:
         :type taille: int
 
         .. note:: This function creates PNG files whose name is YT
-                  video title prefixed with pytci and YT unique id
+                  video title prefixed with pytchi and YT unique id
         """
 
         for obj in self._obj_list:
@@ -116,7 +116,7 @@ class pytci:
         :type taille: float
 
         .. note:: This function creates SVG files whose name is YT
-                  video title prefixed with pytci and YT unique id
+                  video title prefixed with pytchi and YT unique id
         """
 
         for obj in self._obj_list:
@@ -124,14 +124,14 @@ class pytci:
 
     def clean(self):
         """Deletes downloaded videos and video images directories.
-        Does not delete pytci images.
+        Does not delete pytchi images.
         """
 
         for obj in self._obj_list:
             obj.clean()
 
 
-class pytciv:
+class pytchiv:
 
     """This class uses YT URLs to produce an image from one YT
     video. This image is made of concentric circles. Each circle is
@@ -141,19 +141,19 @@ class pytciv:
 
     Two outputs are currently available : 'png' and 'svg'
 
-    :param str url: URL of YT video to convert in pytci image
+    :param str url: URL of YT video to convert in pytchi image
 
-    .. note:: pytci chooses the worst quality of video offered by
+    .. note:: pytchi chooses the worst quality of video offered by
               YT for best download time
 
     :Example:
 
-    >>> o = pytci.pytciv('https://www.youtube.com/watch?v=IjxkCokODEs')
+    >>> o = pytchi.pytchiv('https://www.youtube.com/watch?v=IjxkCokODEs')
     >>> o.to_img() # export to png
     >>> o.to_img(1080) # or with desired image's dimension
-    >>> p = pytci.pytciv('https://www.youtube.com/watch?v=PVyS9JwtFoQ')
+    >>> p = pytchi.pytchiv('https://www.youtube.com/watch?v=PVyS9JwtFoQ')
     >>> p.step = 2 # every 2 seconds of the video (default is 1)
-    >>> p.to_svg() # export to svg>>> import pytci
+    >>> p.to_svg() # export to svg>>> import pytchi
 
     """
 
@@ -166,7 +166,7 @@ class pytciv:
         self.video_obj = ytdown.ytdown(self._vid)
         self.video_obj.down()
         self._name = slugify.slugify(
-            f"pytci-{self._vid}-{self.video_obj._yt.title}"
+            f"pytchi-{self._vid}-{self.video_obj._yt.title}"
         )
         self._step = 1
         self._xmth = 'diagonal'
@@ -243,7 +243,7 @@ class pytciv:
 
     def clean(self, all=False):
         """Deletes video images directory and possibly downloaded video
-        Does not delete pytci image.
+        Does not delete pytchi image.
         """
 
         self.video_obj.clean(all)

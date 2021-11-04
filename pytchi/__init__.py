@@ -5,4 +5,4 @@ __github__ = "https://github.com/cobacdavid"
 __copyright__ = "Copyright 2021, CC-BY-NC-SA"
 
 
-from .pytci import *
+from .pytchi import *

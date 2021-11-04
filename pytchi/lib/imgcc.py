@@ -72,7 +72,7 @@ class imgcc:
             self._sfc = cairo.ImageSurface(cairo.FORMAT_ARGB32,
                                            self._taille, self._taille)
         else:
-            self._sfc = cairo.SVGSurface("pytci.svg",
+            self._sfc = cairo.SVGSurface("pytchi.svg",
                                          self._taille, self._taille)
 
         self._ctx = cairo.Context(self._sfc)
@@ -84,7 +84,7 @@ class imgcc:
         :type name: str
 
         .. note:: This function creates a PNG file OR rename a
-                  temporary SVG file named pytci.svg.
+                  temporary SVG file named pytchi.svg.
 
         """
 
@@ -94,7 +94,7 @@ class imgcc:
         else:
             self._sfc.flush()
             self._sfc.finish()
-            os.rename("pytci.svg", f"{name}.svg")
+            os.rename("pytchi.svg", f"{name}.svg")
 
     def apply(self):
         """Draws concentric circles according to images in path passed to
