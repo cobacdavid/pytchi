@@ -11,11 +11,12 @@
 
 `pip3 install pytchi`
 
-_Dependances:_
+_Dependancies:_
 
 - `opencv-python-headless`
 - `pycairo`
 - `python-slugify`
+- `pytube`
 
 
 ## Usage
