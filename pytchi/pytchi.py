@@ -52,6 +52,7 @@ class pytchi:
 
         self._step = 1
         self._xmth = 'diagonal'
+        self._reverse = False
 
         self._obj_list = []
         for video in self._list:
@@ -79,8 +80,7 @@ class pytchi:
 
     @property
     def xmth(self):
-        """Extraction method of colors : 'random' (line) or 'diagonal'
-        default is 'diagonal'
+        """Getter of xmth property
         """
 
         return self._xmth
@@ -94,6 +94,22 @@ class pytchi:
         self._xmth = exmeth
         for obj in self._obj_list:
             obj.xmth = self._xmth
+
+    @property
+    def reverse(self):
+        """Getter of reverse property.
+        """
+
+        return self._reverse
+
+    @reverse.setter
+    def reverse(self, reverse_choice):
+        """Set to True, it reverses images order (default to False).
+        """
+
+        self._reverse = reverse_choice
+        for obj in self._obj_list:
+            obj.reverse = reverse_choice
 
     def to_img(self, taille=None):
         """Outputs PNG image files
@@ -170,12 +186,12 @@ class pytchiv:
         )
         self._step = 1
         self._xmth = 'diagonal'
+        self._reverse = False
         self.video_obj.pas = self._step
 
     @property
     def step(self):
-        """Step in s between images extracted from the YT video
-        default is 1s
+        """Getter of step property
         """
 
         return self._step
@@ -183,6 +199,7 @@ class pytchiv:
     @step.setter
     def step(self, pas_en_s):
         """ Step in s between images extracted from the YT video
+        Default set to 1s
 
         :param pas_en_s: Step in s
         :type pas_en_s: float or int
@@ -193,8 +210,7 @@ class pytchiv:
 
     @property
     def xmth(self):
-        """Extraction method of colors : 'random' (line) or 'diagonal'
-        default is 'diagonal'
+        """Getter of xmth property
         """
 
         return self._xmth
@@ -207,6 +223,20 @@ class pytchiv:
 
         self._xmth = exmeth
 
+    @property
+    def reverse(self):
+        """Getter of reverse property.
+        """
+
+        return self._reverse
+
+    @reverse.setter
+    def reverse(self, reverse_choice):
+        """Set to True, it reverses images order (default to False).
+        """
+
+        self._reverse = reverse_choice
+
     def to_img(self, taille=None):
         """Outputs PNG image file using YT video unique id.
 
@@ -218,8 +248,9 @@ class pytchiv:
         """
 
         self.video_obj.to_images()
-        self.cc_obj = imgcc.imgcc(self.video_obj._img_fulldir,
-                                  taille, xmth=self._xmth)
+        self.cc_obj = imgcc.imgcc(self.video_obj._img_fulldir, taille,
+                                  xmth=self._xmth,
+                                  reverse=self._reverse)
         self.cc_obj.apply()
         self.cc_obj.save(self._name)
 
@@ -235,9 +266,11 @@ class pytchiv:
         """
 
         self.video_obj.to_images()
-        self.cc_obj = imgcc.imgcc(self.video_obj._img_fulldir,
-                                  taille,
-                                  filefmt='svg')
+        self.cc_obj = imgcc.imgcc(self.video_obj._img_fulldir, taille,
+                                  filefmt='svg',
+                                  xmth=self._xmth,
+                                  reverse=self._reverse
+                                  )
         self.cc_obj.apply()
         self.cc_obj.save(self._name)
 

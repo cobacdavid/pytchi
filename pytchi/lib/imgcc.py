@@ -47,10 +47,13 @@ class imgcc:
 
         return [e / 255 for e in liste]
 
-    def __init__(self, path, taille, filefmt='png', xmth='diagonal'):
+    def __init__(self, path, taille,
+                 filefmt='png',
+                 xmth='diagonal',
+                 reverse=False):
         self._path = path
         self._liste_images = glob.glob(os.path.join(path, "*.jpg"))
-        self._liste_images.sort()
+        self._liste_images.sort(reverse=reverse)
         # bord autour du disque
         self._offset = 10
 

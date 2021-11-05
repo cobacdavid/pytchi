@@ -85,6 +85,12 @@ Does not delete pytchi images.</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="pytchi.pytchi.reverse">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">reverse</span></span><a class="headerlink" href="#pytchi.pytchi.reverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter of reverse property.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="pytchi.pytchi.step">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">step</span></span><a class="headerlink" href="#pytchi.pytchi.step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Step in s between images extracted from YT videos
@@ -127,8 +133,7 @@ video title prefixed with pytchi and YT unique id</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pytchi.pytchi.xmth">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">xmth</span></span><a class="headerlink" href="#pytchi.pytchi.xmth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extraction method of colors : ‘random’ (line) or ‘diagonal’
-default is ‘diagonal’</p>
+<dd><p>Getter of xmth property</p>
 </dd></dl>
 
 </dd></dl>
@@ -172,10 +177,15 @@ Does not delete pytchi image.</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="pytchi.pytchiv.reverse">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">reverse</span></span><a class="headerlink" href="#pytchi.pytchiv.reverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter of reverse property.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="pytchi.pytchiv.step">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">step</span></span><a class="headerlink" href="#pytchi.pytchiv.step" title="Permalink to this definition">¶</a></dt>
-<dd><p>Step in s between images extracted from the YT video
-default is 1s</p>
+<dd><p>Getter of step property</p>
 </dd></dl>
 
 <dl class="py method">
@@ -214,8 +224,7 @@ video unique id.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pytchi.pytchiv.xmth">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">xmth</span></span><a class="headerlink" href="#pytchi.pytchiv.xmth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extraction method of colors : ‘random’ (line) or ‘diagonal’
-default is ‘diagonal’</p>
+<dd><p>Getter of xmth property</p>
 </dd></dl>
 
 </dd></dl>
@@ -272,7 +281,7 @@ defined step.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pytchi.lib.imgcc.imgcc">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pytchi.lib.imgcc.</span></span><span class="sig-name descname"><span class="pre">imgcc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taille</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'diagonal'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytchi.lib.imgcc.imgcc" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pytchi.lib.imgcc.</span></span><span class="sig-name descname"><span class="pre">imgcc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taille</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'diagonal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytchi.lib.imgcc.imgcc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class creating an image of concentric circles from other images.</p>
 <p>Images have to be JPEG images with jpg extension. They have to
 be stored in a directory and are supposed to be correctly named
