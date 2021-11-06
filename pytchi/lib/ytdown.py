@@ -108,7 +108,7 @@ class ytdown:
             i += 1
             n /= 10
 
-        return i
+        return nb_photos, i
 
     def _down(self):
         stream = self._yt.streams.get_by_itag(self._qualite)
@@ -129,6 +129,9 @@ class ytdown:
     def to_images(self):
         """Transforms YT downloaded video to a bunch of images according to
         defined step.
+
+        :return: number of images created
+        :rtype: int
         """
 
         if not self._to_create:
@@ -144,7 +147,7 @@ class ytdown:
         capture_video = cv2.VideoCapture(self._vid)
         b, image = capture_video.read()
         compteur = 0
-        N = self._nb_chiffres_nb_photos()
+        nb_photos, N = self._nb_chiffres_nb_photos()
         while b:
             # position dans la video
             capture_video.set(cv2.CAP_PROP_POS_MSEC, compteur * self._pas)
@@ -160,3 +163,4 @@ class ytdown:
                 break
             compteur += 1
         self._to_create = False
+        return nb_photos

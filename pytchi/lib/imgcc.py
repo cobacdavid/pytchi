@@ -7,6 +7,7 @@ import os
 import cairo
 import cv2
 import random
+import math
 
 
 class imgcc:
@@ -47,11 +48,20 @@ class imgcc:
 
         return [e / 255 for e in liste]
 
+    def _centered_random(dim):
+        alea = round(random.normalvariate(dim / 2, dim / 8))
+        if alea < 0:
+            alea = 0
+        elif alea > dim - 1:
+            alea = dim - 1
+        return alea
+
     def __init__(self, path, taille,
                  filefmt='png',
                  xmth='diagonal',
                  reverse=False,
-                 offset=10):
+                 offset=10,
+                 shape="circles"):
         self._path = path
         self._liste_images = glob.glob(os.path.join(path, "*.jpg"))
         self._liste_images.sort(reverse=reverse)
@@ -65,6 +75,7 @@ class imgcc:
 
         self._filefmt = filefmt
         self._exmethod = xmth
+        self._shape = shape
         self._init_fig()
 
     def _init_fig(self):
@@ -80,6 +91,14 @@ class imgcc:
                                          self._taille, self._taille)
 
         self._ctx = cairo.Context(self._sfc)
+
+    @property
+    def shape(self):
+        return self._shape
+
+    @shape.setter
+    def shape(self, sh):
+        self._shape = sh
 
     def save(self, name):
         """Write and save current drawings to file using name.
@@ -112,7 +131,10 @@ class imgcc:
 
         """
 
-        return self._traitement_disques()
+        if self._shape == "circles":
+            return self._traitement_disques()
+        elif self._shape == "lines":
+            return self._traitement_lignes()
 
     def _traitement_disques(self):
         rayon = self._rayon
@@ -120,6 +142,7 @@ class imgcc:
         # L = (w-2*offset) / 2 = epaisseur * nb_images
         epaisseur = (self._taille - 2 * self._offset) /\
             (2 * len(self._liste_images))
+
         for i, image in enumerate(self._liste_images):
             try:
                 im = cv2.imread(image)
@@ -128,17 +151,10 @@ class imgcc:
                 continue
             except PermissionError:
                 continue
-            # on choisit une ligne au hasard
-            # c'est facile mais une diagonale serait mieux...
-            #
-            # version PIL
-            # data = list(im.getdata())
-            # hasard = w * random.randrange(h - 1)
-            # ligne = data[hasard:hasard + w]
-            #
+
             # version cv2
             if self._exmethod == "random":
-                ligne = im[:, random.randrange(h)]
+                ligne = im[imgcc._centered_random(w), :]
             elif self._exmethod == "diagonal":
                 ligne = []
                 for col in range(w):
@@ -152,7 +168,51 @@ class imgcc:
                 # pas au même endroit sinon on a un motif qui se
                 # dessine à 0 radian (i+)
                 self._ctx.arc(*self._centre, rayon,
-                              i + 6.28 * j / w, i + 6.28 * j / w + .1)
+                              i + 6.28 * j / len(ligne),
+                              i + 6.28 * j / len(ligne) + .1)
                 self._ctx.stroke()
 
             rayon -= 1 / len(self._liste_images) * self._rayon
+
+    def _traitement_lignes(self):
+        epaisseur = (self._taille - 2 * self._offset) / len(self._liste_images)
+        if self._filefmt == 'png':
+            # cela empêche d'éventuelles colonnes vides dues à des
+            # arrondis
+            epaisseur = round(epaisseur)
+            w = 2 * self._offset + epaisseur * len(self._liste_images)
+            self._sfc = cairo.ImageSurface(cairo.FORMAT_ARGB32,
+                                           w, self._taille)
+            self._ctx = cairo.Context(self._sfc)
+
+        abscisse = self._offset + epaisseur / 2
+
+        for i, image in enumerate(self._liste_images):
+            try:
+                im = cv2.imread(image)
+                w, h, _ = im.shape
+            except FileNotFoundError:
+                continue
+            except PermissionError:
+                continue
+
+            # on choisit une ligne au hasard
+            if self._exmethod == "random":
+                ligne = im[imgcc._centered_random(w), :]
+            elif self._exmethod == "diagonal":
+                ligne = []
+                for col in range(w):
+                    row = round((h - 1) / (w - 1) * col)
+                    ligne.append(im[col, row])
+
+            self._ctx.set_antialias(cairo.Antialias.NONE)
+            self._ctx.set_line_width(epaisseur)
+            pas_ordonnee = (self._taille - 2 * self._offset) / len(ligne)
+            for j, couleur in enumerate(ligne):
+                self._ctx.move_to(abscisse,
+                                  self._offset + j * pas_ordonnee)
+                self._ctx.set_source_rgb(*imgcc._conv_en_decimaux(couleur))
+                self._ctx.line_to(abscisse,
+                                  self._offset + (j + 1) * pas_ordonnee)
+                self._ctx.stroke()
+            abscisse += epaisseur

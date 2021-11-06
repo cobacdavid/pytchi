@@ -52,6 +52,7 @@ class pytchi:
 
         self._step = 1
         self._xmth = 'diagonal'
+        self._shape = 'circles'
         self._reverse = False
         self._offset = 10
 
@@ -129,6 +130,16 @@ class pytchi:
         for obj in self._obj_list:
             obj.offset = off
 
+    @property
+    def shape(self):
+        return self._shape
+
+    @shape.setter
+    def shape(self, sh):
+        self._shape = sh
+        for obj in self._obj_list:
+            obj.shape = sh
+
     def to_img(self, taille=None):
         """Outputs PNG image files
 
@@ -204,6 +215,7 @@ class pytchiv:
         )
         self._step = 1
         self._xmth = 'diagonal'
+        self._shape = 'circles'
         self._reverse = False
         self._offset = 10
         self.video_obj.pas = self._step
@@ -271,6 +283,14 @@ class pytchiv:
 
         self._offset = off
 
+    @property
+    def shape(self):
+        return self._shape
+
+    @shape.setter
+    def shape(self, sh):
+        self._shape = sh
+
     def to_img(self, taille=None):
         """Outputs PNG image file using YT video unique id.
 
@@ -285,7 +305,8 @@ class pytchiv:
         self.cc_obj = imgcc.imgcc(self.video_obj._img_fulldir, taille,
                                   xmth=self._xmth,
                                   reverse=self._reverse,
-                                  offset=self._offset)
+                                  offset=self._offset,
+                                  shape=self._shape)
         self.cc_obj.apply()
         self.cc_obj.save(self._name)
 
@@ -305,7 +326,8 @@ class pytchiv:
                                   filefmt='svg',
                                   xmth=self._xmth,
                                   reverse=self._reverse,
-                                  offset=self._offset)
+                                  offset=self._offset,
+                                  shape=self._shape)
         self.cc_obj.apply()
         self.cc_obj.save(self._name)
 
