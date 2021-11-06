@@ -53,6 +53,7 @@ class pytchi:
         self._step = 1
         self._xmth = 'diagonal'
         self._reverse = False
+        self._offset = 10
 
         self._obj_list = []
         for video in self._list:
@@ -110,6 +111,23 @@ class pytchi:
         self._reverse = reverse_choice
         for obj in self._obj_list:
             obj.reverse = reverse_choice
+
+    @property
+    def offset(self):
+        """Getter of offset property
+        """
+
+        return self._offset
+
+    @offset.setter
+    def offset(self, off):
+        """Set in px (PNG) or pt (SVG) the extra space between
+        circles and image's edges.
+        """
+
+        self._offset = off
+        for obj in self._obj_list:
+            obj.offset = off
 
     def to_img(self, taille=None):
         """Outputs PNG image files
@@ -187,6 +205,7 @@ class pytchiv:
         self._step = 1
         self._xmth = 'diagonal'
         self._reverse = False
+        self._offset = 10
         self.video_obj.pas = self._step
 
     @property
@@ -237,6 +256,21 @@ class pytchiv:
 
         self._reverse = reverse_choice
 
+    @property
+    def offset(self):
+        """Getter of offset property
+        """
+
+        return self._offset
+
+    @offset.setter
+    def offset(self, off):
+        """Set in px (PNG) or pt (SVG) the extra space between
+        circles and image's edges.
+        """
+
+        self._offset = off
+
     def to_img(self, taille=None):
         """Outputs PNG image file using YT video unique id.
 
@@ -250,7 +284,8 @@ class pytchiv:
         self.video_obj.to_images()
         self.cc_obj = imgcc.imgcc(self.video_obj._img_fulldir, taille,
                                   xmth=self._xmth,
-                                  reverse=self._reverse)
+                                  reverse=self._reverse,
+                                  offset=self._offset)
         self.cc_obj.apply()
         self.cc_obj.save(self._name)
 
@@ -269,8 +304,8 @@ class pytchiv:
         self.cc_obj = imgcc.imgcc(self.video_obj._img_fulldir, taille,
                                   filefmt='svg',
                                   xmth=self._xmth,
-                                  reverse=self._reverse
-                                  )
+                                  reverse=self._reverse,
+                                  offset=self._offset)
         self.cc_obj.apply()
         self.cc_obj.save(self._name)
 

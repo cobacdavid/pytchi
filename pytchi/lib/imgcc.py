@@ -50,12 +50,13 @@ class imgcc:
     def __init__(self, path, taille,
                  filefmt='png',
                  xmth='diagonal',
-                 reverse=False):
+                 reverse=False,
+                 offset=10):
         self._path = path
         self._liste_images = glob.glob(os.path.join(path, "*.jpg"))
         self._liste_images.sort(reverse=reverse)
         # bord autour du disque
-        self._offset = 10
+        self._offset = offset
 
         if not taille:
             self._taille = 2 * (len(self._liste_images) + self._offset)
