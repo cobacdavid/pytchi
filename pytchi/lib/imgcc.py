@@ -7,7 +7,6 @@ import os
 import cairo
 import cv2
 import random
-import math
 
 
 class imgcc:
@@ -49,6 +48,14 @@ class imgcc:
         return [e / 255 for e in liste]
 
     def _centered_random(dim):
+        """Returns a random number using normal distribution.  mu is half
+        of argument and sigma is a quarter of mu. This function
+        chooses a random line centered in the width of an image.
+
+        :param dim: dimension of the image
+        :type dim: float
+        """
+
         alea = round(random.normalvariate(dim / 2, dim / 8))
         if alea < 0:
             alea = 0
@@ -58,7 +65,7 @@ class imgcc:
 
     def __init__(self, path, taille,
                  filefmt='png',
-                 xmth='diagonal',
+                 xmth='random',
                  reverse=False,
                  offset=10,
                  shape="circles"):
@@ -98,6 +105,12 @@ class imgcc:
 
     @shape.setter
     def shape(self, sh):
+        """Sets the type of output : 'circles or 'lines'
+
+        :param sh: 'circles' or 'lines'
+        :type sh: str
+        """
+
         self._shape = sh
 
     def save(self, name):
@@ -120,14 +133,15 @@ class imgcc:
             os.rename("pytchi.svg", f"{name}.svg")
 
     def apply(self):
-        """Draws concentric circles according to images in path passed to
-        the constructor.
+        """Draws concentric circles or a rectangle made of vertical lines
+        according to images in path passed to the constructor.
 
         .. note:: If an image file connot be found or cannot be
                   opened , this function doesn't raise an error.
 
-        Actually, this algorithm extracts one random line of an
-        image and transforms it into a circle in the ouput image.
+        .. note:: Actually, this algorithm extracts one random line
+                  of an image and transforms it into a circle or a
+                  line in the ouput image.
 
         """
 

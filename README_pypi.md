@@ -70,22 +70,22 @@ r.to_img(800)
 
 - [EelPrEojesM](https://www.youtube.com/watch?v=EelPrEojesM)
 
-<img width="37.5%" src="./examples/pytchi-eelpreojesm-the-eden-house-sin.png"></img>
-<img width="37.5%" src="./examples/pytchi-eelpreojesm-the-eden-house-sin__lines.png"></img>
+<img width="37.5%" src="https://github.com/cobacdavid/pytchi/blob/main/examples/pytchi-eelpreojesm-the-eden-house-sin.png"></img>
+<img width="37.5%" src="https://github.com/cobacdavid/pytchi/blob/main/examples/pytchi-eelpreojesm-the-eden-house-sin__lines.png"></img>
 
 - [IjxkCokODEs](https://www.youtube.com/watch?v=IjxkCokODEs)
 
-<img width="75%" src="./examples/pytchi-ijxkcokodes-talk-to-her-zodiac-official-video.png"></img>
+<img width="75%" src="https://github.com/cobacdavid/pytchi/blob/main/examples/pytchi-ijxkcokodes-talk-to-her-zodiac-official-video.png"></img>
 
 - [PVyS9JwtFoQ](https://www.youtube.com/watch?v=PVyS9JwtFoQ)
 
-<img width="75%" src="./examples/pytchi-pvys9jwtfoq-pixies-debaser-official-video.svg"></img>
+<img width="75%" src="https://github.com/cobacdavid/pytchi/blob/main/examples/pytchi-pvys9jwtfoq-pixies-debaser-official-video.svg"></img>
 
 - [D__UaR5MQao](pytchi-d-uar5mqao-the-dp-3t-algorithm-for-contact-tracing-via-nicky-case.png) / [gxAaO2rsdIs](pytchi-gxaao2rsdis-simulating-an-epidemic.png) / [Kas0tIxDvrg](pytchi-kas0tixdvrg-exponential-growth-and-epidemics.png)
 
-<img width="25%" src="./examples/pytchi-d-uar5mqao-the-dp-3t-algorithm-for-contact-tracing-via-nicky-case.png"></img>
-<img width="25%" src="./examples/pytchi-gxaao2rsdis-simulating-an-epidemic.png"></img>
-<img width="25%" src="./examples/pytchi-kas0tixdvrg-exponential-growth-and-epidemics.png"></img>
+<img width="25%" src="https://github.com/cobacdavid/pytchi/blob/main/examples/pytchi-d-uar5mqao-the-dp-3t-algorithm-for-contact-tracing-via-nicky-case.png"></img>
+<img width="25%" src="https://github.com/cobacdavid/pytchi/blob/main/examples/pytchi-gxaao2rsdis-simulating-an-epidemic.png"></img>
+<img width="25%" src="https://github.com/cobacdavid/pytchi/blob/main/examples/pytchi-kas0tixdvrg-exponential-growth-and-epidemics.png"></img>
 
 ## Copyright
 

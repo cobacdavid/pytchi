@@ -1,3 +1,6 @@
+__author__ = "david cobac"
+__copyright__ = "Copyright 2021, CC-BY-NC-SA"
+
 from urllib.parse import urlparse, parse_qs
 from .lib import ytdown
 from .lib import imgcc
@@ -30,7 +33,7 @@ class pytchi:
     >>> o.to_img(1080) # or with desired image's dimension
     >>> p = pytchi.pytchi('https://www.youtube.com/watch?v=PVyS9JwtFoQ')
     >>> p.step = 2 # every 2 seconds of the video (default is 1)
-    >>> p.xmth = 'random'
+    >>> p.xmth = 'diagonal'
     >>> p.to_svg() # export to svg>>> import pytchi
     >>> q = pytchi.pytchi('https://www.youtube.com/watch?v=gxAaO2rsdIs&list=PLZHQObOWTQDOcxqQ36Vow3TdTRjkdSvT-') # a playlist of 3 videos
     >>> q.to_img() # 3 images will be output
@@ -51,7 +54,7 @@ class pytchi:
             pass
 
         self._step = 1
-        self._xmth = 'diagonal'
+        self._xmth = 'random'
         self._shape = 'circles'
         self._reverse = False
         self._offset = 10
@@ -64,17 +67,15 @@ class pytchi:
     def step(self):
         """Step in s between images extracted from YT videos
         default is 1s
+
+        :param pas_en_s: Step in s
+        :type pas_en_s: float or int
         """
 
         return self._step
 
     @step.setter
     def step(self, pas_en_s):
-        """ Step in s between images extracted from YT videos
-
-        :param pas_en_s: Step in s
-        :type pas_en_s: float or int
-        """
 
         self._step = pas_en_s
         for obj in self._obj_list:
@@ -82,16 +83,17 @@ class pytchi:
 
     @property
     def xmth(self):
-        """Getter of xmth property
+        """Extraction method of colors : 'random' (line) or 'diagonal'
+        default is 'random'
+
+        :param exmeth: extraction method
+        :type exmeth:: str
         """
 
         return self._xmth
 
     @xmth.setter
     def xmth(self, exmeth):
-        """Extraction method of colors : 'random' (line) or 'diagonal'
-        default is 'diagonal'
-        """
 
         self._xmth = exmeth
         for obj in self._obj_list:
@@ -99,15 +101,16 @@ class pytchi:
 
     @property
     def reverse(self):
-        """Getter of reverse property.
+        """Boolean, set to True, it reverses images order (default to False).
+
+        :param reverse_choice: order of extracted images
+        :type reverse_choice: boolean
         """
 
         return self._reverse
 
     @reverse.setter
     def reverse(self, reverse_choice):
-        """Set to True, it reverses images order (default to False).
-        """
 
         self._reverse = reverse_choice
         for obj in self._obj_list:
@@ -115,16 +118,17 @@ class pytchi:
 
     @property
     def offset(self):
-        """Getter of offset property
+        """Set in px (PNG) or pt (SVG) the extra space between
+        circles and image's edges.
+
+        :param off: distance between drawings and edges
+        :type off: float
         """
 
         return self._offset
 
     @offset.setter
     def offset(self, off):
-        """Set in px (PNG) or pt (SVG) the extra space between
-        circles and image's edges.
-        """
 
         self._offset = off
         for obj in self._obj_list:
@@ -132,6 +136,13 @@ class pytchi:
 
     @property
     def shape(self):
+        """Type of output drawing: circles or lines
+        default is 'circles'
+
+        :param sh: 'circles' or 'lines'
+        :type sh: str
+        """
+
         return self._shape
 
     @shape.setter
@@ -167,13 +178,13 @@ class pytchi:
         for obj in self._obj_list:
             obj.to_svg(taille)
 
-    def clean(self):
+    def clean(self, all=False):
         """Deletes downloaded videos and video images directories.
         Does not delete pytchi images.
         """
 
         for obj in self._obj_list:
-            obj.clean()
+            obj.clean(all)
 
 
 class pytchiv:
@@ -214,7 +225,7 @@ class pytchiv:
             f"pytchi-{self._vid}-{self.video_obj._yt.title}"
         )
         self._step = 1
-        self._xmth = 'diagonal'
+        self._xmth = 'random'
         self._shape = 'circles'
         self._reverse = False
         self._offset = 10
@@ -222,64 +233,42 @@ class pytchiv:
 
     @property
     def step(self):
-        """Getter of step property
-        """
 
         return self._step
 
     @step.setter
     def step(self, pas_en_s):
-        """ Step in s between images extracted from the YT video
-        Default set to 1s
-
-        :param pas_en_s: Step in s
-        :type pas_en_s: float or int
-        """
 
         self._step = pas_en_s
         self.video_obj.step = self._step
 
     @property
     def xmth(self):
-        """Getter of xmth property
-        """
 
         return self._xmth
 
     @xmth.setter
     def xmth(self, exmeth):
-        """Extraction method of colors : 'random' (line) or 'diagonal'
-        default is 'diagonal'
-        """
 
         self._xmth = exmeth
 
     @property
     def reverse(self):
-        """Getter of reverse property.
-        """
 
         return self._reverse
 
     @reverse.setter
     def reverse(self, reverse_choice):
-        """Set to True, it reverses images order (default to False).
-        """
 
         self._reverse = reverse_choice
 
     @property
     def offset(self):
-        """Getter of offset property
-        """
 
         return self._offset
 
     @offset.setter
     def offset(self, off):
-        """Set in px (PNG) or pt (SVG) the extra space between
-        circles and image's edges.
-        """
 
         self._offset = off
 
@@ -292,14 +281,6 @@ class pytchiv:
         self._shape = sh
 
     def to_img(self, taille=None):
-        """Outputs PNG image file using YT video unique id.
-
-        :param taille: Dimension in pixels of output image
-        :type taille: int
-
-        .. note:: This function creates a PNG file whose name is YT
-                  video unique id.
-        """
 
         self.video_obj.to_images()
         self.cc_obj = imgcc.imgcc(self.video_obj._img_fulldir, taille,
@@ -308,18 +289,11 @@ class pytchiv:
                                   offset=self._offset,
                                   shape=self._shape)
         self.cc_obj.apply()
+        if self._shape == "lines":
+            self._name += "__lines"
         self.cc_obj.save(self._name)
 
     def to_svg(self, taille=None):
-        """Outputs SVG image file using YT video unique id.
-
-        :param taille: Dimension in points of output image
-                       1 point = 1/72 inch
-        :type taille: float
-
-        .. note:: This function creates a SVG file whose name is YT
-                  video unique id.
-        """
 
         self.video_obj.to_images()
         self.cc_obj = imgcc.imgcc(self.video_obj._img_fulldir, taille,
@@ -329,11 +303,10 @@ class pytchiv:
                                   offset=self._offset,
                                   shape=self._shape)
         self.cc_obj.apply()
+        if self._shape == "lines":
+            self._name += "__lines"
         self.cc_obj.save(self._name)
 
     def clean(self, all=False):
-        """Deletes video images directory and possibly downloaded video
-        Does not delete pytchi image.
-        """
 
         self.video_obj.clean(all)

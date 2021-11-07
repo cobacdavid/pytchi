@@ -71,7 +71,7 @@ which is intended to treat a single video.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">o</span><span class="o">.</span><span class="n">to_img</span><span class="p">(</span><span class="mi">1080</span><span class="p">)</span> <span class="c1"># or with desired image&#39;s dimension</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">pytchi</span><span class="o">.</span><span class="n">pytchi</span><span class="p">(</span><span class="s1">&#39;https://www.youtube.com/watch?v=PVyS9JwtFoQ&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># every 2 seconds of the video (default is 1)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">xmth</span> <span class="o">=</span> <span class="s1">&#39;random&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">xmth</span> <span class="o">=</span> <span class="s1">&#39;diagonal&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">to_svg</span><span class="p">()</span> <span class="c1"># export to svg&gt;&gt;&gt; import pytchi</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">pytchi</span><span class="o">.</span><span class="n">pytchi</span><span class="p">(</span><span class="s1">&#39;https://www.youtube.com/watch?v=gxAaO2rsdIs&amp;list=PLZHQObOWTQDOcxqQ36Vow3TdTRjkdSvT-&#39;</span><span class="p">)</span> <span class="c1"># a playlist of 3 videos</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">to_img</span><span class="p">()</span> <span class="c1"># 3 images will be output</span>
@@ -79,7 +79,7 @@ which is intended to treat a single video.</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="pytchi.pytchi.clean">
-<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pytchi.pytchi.clean" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytchi.pytchi.clean" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes downloaded videos and video images directories.
 Does not delete pytchi images.</p>
 </dd></dl>
@@ -87,13 +87,36 @@ Does not delete pytchi images.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pytchi.pytchi.offset">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#pytchi.pytchi.offset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Getter of offset property</p>
+<dd><p>Set in px (PNG) or pt (SVG) the extra space between
+circles and image’s edges.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>off</strong> (<em>float</em>) – distance between drawings and edges</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pytchi.pytchi.reverse">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">reverse</span></span><a class="headerlink" href="#pytchi.pytchi.reverse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Getter of reverse property.</p>
+<dd><p>Boolean, set to True, it reverses images order (default to False).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>reverse_choice</strong> (<em>boolean</em>) – order of extracted images</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pytchi.pytchi.shape">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#pytchi.pytchi.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type of output drawing: circles or lines
+default is ‘circles’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sh</strong> (<em>str</em>) – ‘circles’ or ‘lines’</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -101,6 +124,11 @@ Does not delete pytchi images.</p>
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">step</span></span><a class="headerlink" href="#pytchi.pytchi.step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Step in s between images extracted from YT videos
 default is 1s</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pas_en_s</strong> (<em>float</em><em> or </em><em>int</em>) – Step in s</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -139,104 +167,13 @@ video title prefixed with pytchi and YT unique id</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pytchi.pytchi.xmth">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">xmth</span></span><a class="headerlink" href="#pytchi.pytchi.xmth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Getter of xmth property</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="pytchi.pytchiv">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pytchi.</span></span><span class="sig-name descname"><span class="pre">pytchiv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytchi.pytchiv" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class uses YT URLs to produce an image from one YT
-video. This image is made of concentric circles. Each circle is
-made joining little arcs whose color is taken from an image of
-the video. Outermost circles are the first images and innermost
-are last images.</p>
-<p>Two outputs are currently available : ‘png’ and ‘svg’</p>
+<dd><p>Extraction method of colors : ‘random’ (line) or ‘diagonal’
+default is ‘random’</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>url</strong> (<em>str</em>) – URL of YT video to convert in pytchi image</p>
+<dd class="field-odd"><p><strong>exmeth</strong> – extraction method</p>
 </dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>pytchi chooses the worst quality of video offered by
-YT for best download time</p>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Example</dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">o</span> <span class="o">=</span> <span class="n">pytchi</span><span class="o">.</span><span class="n">pytchiv</span><span class="p">(</span><span class="s1">&#39;https://www.youtube.com/watch?v=IjxkCokODEs&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">o</span><span class="o">.</span><span class="n">to_img</span><span class="p">()</span> <span class="c1"># export to png</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">o</span><span class="o">.</span><span class="n">to_img</span><span class="p">(</span><span class="mi">1080</span><span class="p">)</span> <span class="c1"># or with desired image&#39;s dimension</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">pytchi</span><span class="o">.</span><span class="n">pytchiv</span><span class="p">(</span><span class="s1">&#39;https://www.youtube.com/watch?v=PVyS9JwtFoQ&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># every 2 seconds of the video (default is 1)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">to_svg</span><span class="p">()</span> <span class="c1"># export to svg&gt;&gt;&gt; import pytchi</span>
-</pre></div>
-</div>
-<dl class="py method">
-<dt class="sig sig-object py" id="pytchi.pytchiv.clean">
-<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytchi.pytchiv.clean" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deletes video images directory and possibly downloaded video
-Does not delete pytchi image.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="pytchi.pytchiv.offset">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#pytchi.pytchiv.offset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Getter of offset property</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="pytchi.pytchiv.reverse">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">reverse</span></span><a class="headerlink" href="#pytchi.pytchiv.reverse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Getter of reverse property.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="pytchi.pytchiv.step">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">step</span></span><a class="headerlink" href="#pytchi.pytchiv.step" title="Permalink to this definition">¶</a></dt>
-<dd><p>Getter of step property</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pytchi.pytchiv.to_img">
-<span class="sig-name descname"><span class="pre">to_img</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taille</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytchi.pytchiv.to_img" title="Permalink to this definition">¶</a></dt>
-<dd><p>Outputs PNG image file using YT video unique id.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>taille</strong> (<em>int</em>) – Dimension in pixels of output image</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This function creates a PNG file whose name is YT
-video unique id.</p>
-</div>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="pytchi.pytchiv.to_svg">
-<span class="sig-name descname"><span class="pre">to_svg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">taille</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytchi.pytchiv.to_svg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Outputs SVG image file using YT video unique id.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>taille</strong> (<em>float</em>) – Dimension in points of output image
-1 point = 1/72 inch</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This function creates a SVG file whose name is YT
-video unique id.</p>
-</div>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="pytchi.pytchiv.xmth">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">xmth</span></span><a class="headerlink" href="#pytchi.pytchiv.xmth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Getter of xmth property</p>
 </dd></dl>
 
 </dd></dl>
@@ -287,13 +224,21 @@ from this video.</p>
 <span class="sig-name descname"><span class="pre">to_images</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pytchi.lib.ytdown.ytdown.to_images" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transforms YT downloaded video to a bunch of images according to
 defined step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>number of images created</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pytchi.lib.imgcc.imgcc">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pytchi.lib.imgcc.</span></span><span class="sig-name descname"><span class="pre">imgcc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taille</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'diagonal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytchi.lib.imgcc.imgcc" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pytchi.lib.imgcc.</span></span><span class="sig-name descname"><span class="pre">imgcc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taille</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'circles'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pytchi.lib.imgcc.imgcc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class creating an image of concentric circles from other images.</p>
 <p>Images have to be JPEG images with jpg extension. They have to
 be stored in a directory and are supposed to be correctly named
@@ -321,15 +266,19 @@ image-0546.jpg.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pytchi.lib.imgcc.imgcc.apply">
 <span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pytchi.lib.imgcc.imgcc.apply" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws concentric circles according to images in path passed to
-the constructor.</p>
+<dd><p>Draws concentric circles or a rectangle made of vertical lines
+according to images in path passed to the constructor.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If an image file connot be found or cannot be
 opened , this function doesn’t raise an error.</p>
 </div>
-<p>Actually, this algorithm extracts one random line of an
-image and transforms it into a circle in the ouput image.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Actually, this algorithm extracts one random line
+of an image and transforms it into a circle or a
+line in the ouput image.</p>
+</div>
 </dd></dl>
 
 <dl class="py method">

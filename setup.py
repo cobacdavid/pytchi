@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 
-with open('README.md') as f:
+with open('README_pypi.md') as f:
     long_description = f.read()
 
 setup(
     name='pytchi',
-    version='0.1',
+    version='0.2',
     description='Python YouTube Concentric Circles Image',
     long_description_content_type='text/markdown',
     long_description=long_description,

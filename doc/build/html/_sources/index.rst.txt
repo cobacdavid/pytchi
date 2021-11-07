@@ -13,9 +13,6 @@ PYTCHI's documentation
 .. autoclass:: pytchi.pytchi
    :members:
 
-.. autoclass:: pytchi.pytchiv
-   :members:
-
 .. autoclass:: pytchi.lib.ytdown.ytdown
    :members:
 
