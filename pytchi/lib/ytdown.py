@@ -55,6 +55,7 @@ class ytdown:
 
     def _init_yt(self):
         self._yt = YouTube(self._url)
+        self.length = self._yt.length
 
     @property
     def vid(self):

@@ -151,7 +151,7 @@ class pytchi:
         for obj in self._obj_list:
             obj.shape = sh
 
-    def to_img(self, taille=None):
+    def to_img(self, taille=None, filename=None):
         """Outputs PNG image files
 
         :param taille: Dimension in pixels of output image
@@ -162,9 +162,9 @@ class pytchi:
         """
 
         for obj in self._obj_list:
-            obj.to_img(taille)
+            obj.to_img(taille, filename)
 
-    def to_svg(self, taille=None):
+    def to_svg(self, taille=None, filename=None):
         """Outputs SVG image file using YT video unique id.
 
         :param taille: Dimension in points of output image
@@ -176,7 +176,7 @@ class pytchi:
         """
 
         for obj in self._obj_list:
-            obj.to_svg(taille)
+            obj.to_svg(taille, filename)
 
     def clean(self, all=False):
         """Deletes downloaded videos and video images directories.
@@ -185,6 +185,16 @@ class pytchi:
 
         for obj in self._obj_list:
             obj.clean(all)
+
+    def get_lengths(self):
+        """Returns lengths of all the videos (in s)
+        :rtype: list(int)
+        """
+
+        lengths = []
+        for obj in self._obj_list:
+            lengths.append(obj.get_length())
+        return lengths
 
 
 class pytchiv:
@@ -280,7 +290,10 @@ class pytchiv:
     def shape(self, sh):
         self._shape = sh
 
-    def to_img(self, taille=None):
+    def get_length(self):
+        return self.video_obj.length
+
+    def to_img(self, taille=None, filename=None):
 
         self.video_obj.to_images()
         self.cc_obj = imgcc.imgcc(self.video_obj._img_fulldir, taille,
@@ -291,9 +304,10 @@ class pytchiv:
         self.cc_obj.apply()
         if self._shape == "lines":
             self._name += "__lines"
-        self.cc_obj.save(self._name)
+        sv_name = filename if filename else self._name
+        self.cc_obj.save(sv_name)
 
-    def to_svg(self, taille=None):
+    def to_svg(self, taille=None, filename=None):
 
         self.video_obj.to_images()
         self.cc_obj = imgcc.imgcc(self.video_obj._img_fulldir, taille,
@@ -305,7 +319,8 @@ class pytchiv:
         self.cc_obj.apply()
         if self._shape == "lines":
             self._name += "__lines"
-        self.cc_obj.save(self._name)
+        sv_name = filename if filename else self._name
+        self.cc_obj.save(sv_name)
 
     def clean(self, all=False):
 
